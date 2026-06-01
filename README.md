@@ -44,3 +44,11 @@ Se dados inválidos forem enviados no `POST` ou `PUT`, a API automaticamente ret
 1. Clone o repositório:
    ```bash
    git clone [https://github.com/fabriciobmachado/gestao-vendas.git](https://github.com/fabriciobmachado/gestao-vendas.git)
+
+2. Abra o projeto na sua IDE de preferência (recomendado IntelliJ IDEA).
+
+3.Aguarde o Maven baixar as dependências configuradas no pom.xml.
+
+4.Execute a classe principal GestaoVendasApplication.java.
+
+5.A API estará disponível no endereço: http://localhost:8080/produtos.
