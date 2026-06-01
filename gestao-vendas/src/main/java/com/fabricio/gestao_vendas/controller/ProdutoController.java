@@ -2,9 +2,13 @@ package com.fabricio.gestao_vendas.controller;
 
 import com.fabricio.gestao_vendas.model.Produto;
 import com.fabricio.gestao_vendas.repository.ProdutoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,16 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos") // Define que todas as requisições para /produtos caem aqui
+@RequestMapping("/produtos")
 public class ProdutoController {
 
-    @Autowired // Injeção de Dependência: O Spring entrega o repositório pronto para uso
+    @Autowired
     private ProdutoRepository produtoRepository;
 
     // 1. ENDPOINT PARA CADASTRAR UM PRODUTO (POST)
     @PostMapping
-    public Produto criarProduto(@RequestBody Produto produto) {
-        // O @RequestBody transforma o JSON que vem da web em um objeto Produto Java
+    public Produto criarProduto(@Valid @RequestBody Produto produto) {
         return produtoRepository.save(produto);
     }
 
@@ -30,10 +33,10 @@ public class ProdutoController {
     public List<Produto> listarTodos() {
         return produtoRepository.findAll();
     }
+
     // 3. ENDPOINT PARA ATUALIZAR UM PRODUTO POR ID (PUT)
     @PutMapping("/{id}")
-    public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
-        // Buscamos o produto existente ou lançamos uma exceção se não encontrar
+    public Produto atualizarProduto(@PathVariable Long id, @Valid @RequestBody Produto produtoAtualizado) {
         return produtoRepository.findById(id).map(produto -> {
             produto.setNome(produtoAtualizado.getNome());
             produto.setPreco(produtoAtualizado.getPreco());
